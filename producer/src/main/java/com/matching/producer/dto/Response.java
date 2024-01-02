@@ -8,5 +8,6 @@ import lombok.ToString;
 public class Response {
     
     String message;
+    int status;
     Message data;
 }

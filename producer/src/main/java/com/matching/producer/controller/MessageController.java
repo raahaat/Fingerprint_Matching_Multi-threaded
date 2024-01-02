@@ -1,5 +1,7 @@
 package com.matching.producer.controller;
 
+import java.util.UUID;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,10 +32,14 @@ public class MessageController {
     public ResponseEntity<?> sendMessage(@RequestBody Message msg) {
         Response res = new Response();
         JSONObject obj = new JSONObject();
-        obj.put("name", msg.getName());
-        obj.put("email", msg.getEmail());
-        obj.put("phone", msg.getPhone());
+        UUID id = UUID.randomUUID();
+
+        obj.put("id", id.toString());
+        obj.put("customerNumber", msg.getCustomerNumber());
+        obj.put("customerNumberList", msg.getCustomerNumberList());
         res.setMessage("Successfully sent.");
+        res.setStatus(200);
+        msg.setId(id.toString());
         res.setData(msg);
         producer.sendMessage(obj.toString());
 
